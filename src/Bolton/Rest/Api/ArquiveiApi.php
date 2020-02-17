@@ -19,7 +19,7 @@ class ArquiveiApi implements Arquivei
         ];
     }
 
-    public function nfeReceived($page = false)
+    public function nfeReceived(String $page = ''): ?Object
     {
         $response = $this->client->request(
             'GET',
@@ -34,7 +34,7 @@ class ArquiveiApi implements Arquivei
         return null;
     }
 
-    public function getUrl($resource)
+    public function getUrl(String $resource = ''): String
     {
         return config('arquivei.api.base_uri') . $resource;
     }
