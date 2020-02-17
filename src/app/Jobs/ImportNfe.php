@@ -2,12 +2,16 @@
 
 namespace App\Jobs;
 
-use Bolton\ImportNfe as BoltonImportNfe;
+use App\Nfe;
+use Bolton\Domain\NfeImporter;
+use Bolton\Rest\Api\ArquiveiApi;
+use Bolton\XmlParser;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class ImportNfe implements ShouldQueue
 {
@@ -29,7 +33,15 @@ class ImportNfe implements ShouldQueue
      */
     public function handle()
     {
-        $bolton = new BoltonImportNfe();
-        $bolton->importAll();
+        try {
+            $nfeImporter = new NfeImporter(
+                new Nfe(),
+                new ArquiveiApi(),
+                new XmlParser()
+            );
+            $nfeImporter->importAll();
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+        }
     }
 }

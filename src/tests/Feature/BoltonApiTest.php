@@ -32,11 +32,9 @@ class BoltonApiTest extends TestCase
     {
         $response = $this->get('/api/nfe/123456789');
 
-        $response->assertNotFound()
+        $response->assertOk()
                 ->assertJson([
-                    'data' => [
-                        'message' => "Nenhuma NFe com a chave '123456789' foi encontrada.",
-                    ],
+                    'data' => [],
                 ]);
     }
 }

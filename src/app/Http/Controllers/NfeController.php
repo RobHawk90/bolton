@@ -3,26 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Nfe;
+use Bolton\Domain\NfeSearch;
+use Bolton\Util\Response;
+use Illuminate\Support\Facades\Log;
 
 class NfeController extends Controller
 {
-    public function find(String $key)
+    public function search(String $key)
     {
-        $nfe = Nfe::findByAccessKey($key);
+        try {
+            $search = new NfeSearch(new Nfe(), new Response());
 
-        if (empty($nfe)) {
-            return response()->json([
-                'data' => [
-                    'message' => "Nenhuma NFe com a chave '$key' foi encontrada.",
-                ],
-            ], 404);
+            return $search
+                ->byAccessKey($key)
+                ->getResponse()
+                ->toJson();
+        } catch (\Exception $e) {
+            Log::error("Something gone wrong while trying find a NF-e (NfeController@search): {$e->getMessage()}");
+            throw new \Exception('An error has occurred while trying to search a NF-e');
         }
-
-        return response()->json([
-            'data' => [
-                'key' => $nfe->access_key,
-                'value' => $nfe->total_value,
-            ]
-        ], 200);
     }
 }

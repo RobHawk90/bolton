@@ -17,4 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/nfe/{key}', 'NfeController@find');
+Route::get('/nfe/{key}', 'NfeController@search');

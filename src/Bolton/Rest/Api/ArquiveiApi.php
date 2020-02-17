@@ -4,7 +4,7 @@ namespace Bolton\Rest\Api;
 
 use GuzzleHttp\Client;
 
-class ArquiveiApi
+class ArquiveiApi implements Arquivei
 {
     private $client;
     private $headers;

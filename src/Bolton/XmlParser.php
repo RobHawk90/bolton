@@ -3,11 +3,11 @@
 namespace Bolton;
 
 class XmlParser {
-    public function parseBase64(String $encoded)
+    public function parseBase64(String $encoded): NfeXml
     {
         $xmlString = base64_decode($encoded);
         $xml = simplexml_load_string($xmlString);
-        $xmlArray = json_decode(json_encode($xml), true);
-        return $xmlArray;
+        $xmlObject = json_decode(json_encode($xml));
+        return new NfeXml($xmlObject);
     }
 }
