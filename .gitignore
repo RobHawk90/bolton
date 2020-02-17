@@ -1,0 +1,11 @@
+.idea
+src/.env
+src/node_modules
+src/public/css/app.css
+src/public/fonts/vendor
+src/public/js/app.js
+src/public/vendor
+src/tests/_output/
+src/tests/_support/_generated
+src/vendor
+docker_bolton/data
